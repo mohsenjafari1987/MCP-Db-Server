@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Version>1.0.0</Version>
+		<PackageId>Mcp.Db</PackageId>
+		<Authors>MohsenJafari</Authors>
+		<Description>Production-grade MCP-compatible database client for LLMs (with PostgreSQL support)</Description>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<RepositoryUrl>https://github.com/yourorg/mcp-db</RepositoryUrl>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	</PropertyGroup>
+
+	<!-- Internal dependencies (hidden from consumers) -->
+	<ItemGroup>
+		<ProjectReference Include="..\Mcp.Db.Contract\Mcp.Db.Contract.csproj" PrivateAssets="all" />
+		<ProjectReference Include="..\Mcp.Db.Application\Mcp.Db.Application.csproj" PrivateAssets="all" />
+		<ProjectReference Include="..\Mcp.Db.Infrastructure\Mcp.Db.Infrastructure.csproj" PrivateAssets="all" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\LICENSE" Pack="true" PackagePath="" />
+	</ItemGroup>
+
+</Project>
