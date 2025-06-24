@@ -2,6 +2,7 @@ using Mcp.Db.Application.Factory;
 using Mcp.Db.Application.Services;
 using Mcp.Db.Contract.Interfaces;
 using Mcp.Db.Infrastructure.Postgres;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,8 @@ if (!await PostgresConnectionTester.TryConnectAsync(connectionString))
 builder.Services.AddSingleton<IMcpQueryService>(
    new PostgresMcpQueryService(connectionString));
 builder.Services.AddScoped<McpQueryCoordinator>();
+builder.Services.AddSingleton<ISchemaService>(new PostgresSchemaService(connectionString));
+builder.Services.AddScoped<SchemaCoordinator>();
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -65,7 +68,20 @@ app.MapPost("/query", async (
         return Results.Problem(title: "Internal Server Error", detail: ex.Message);
     }
 })
-            .WithName("ExecuteQuery")
-            .WithOpenApi();
+    .WithName("ExecuteQuery")
+    .WithOpenApi();
+
+
+app.MapGet("/schema", async (SchemaCoordinator coordinator, CancellationToken ct) =>
+{
+    var result = await coordinator.GetAllSchemasAsync(ct);
+    return Results.Ok(result);
+});
+
+app.MapGet("/schema/{tableName}", async (string tableName, SchemaCoordinator coordinator, CancellationToken ct) =>
+{
+    var result = await coordinator.GetSchemaForTableAsync(tableName, ct);
+    return result is not null ? Results.Ok(result) : Results.NotFound();
+});
 
 app.Run();
