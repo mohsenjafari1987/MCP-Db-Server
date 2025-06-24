@@ -3,11 +3,11 @@ using Mcp.Db.Contract.Models;
 
 namespace Mcp.Db.Application.Services;
 
-public class McpQueryCoordinator
+public class QueryCoordinator
 {
     private readonly IMcpQueryService _queryService;
 
-    public McpQueryCoordinator(IMcpQueryService queryService)
+    public QueryCoordinator(IMcpQueryService queryService)
     {
         _queryService = queryService;
     }

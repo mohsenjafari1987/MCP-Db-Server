@@ -28,8 +28,8 @@ if (!await PostgresConnectionTester.TryConnectAsync(connectionString))
 
 builder.Services.AddSingleton<IMcpQueryService>(
    new PostgresMcpQueryService(connectionString));
-builder.Services.AddScoped<McpQueryCoordinator>();
-builder.Services.AddSingleton<ISchemaService>(new PostgresSchemaService(connectionString));
+builder.Services.AddScoped<QueryCoordinator>();
+builder.Services.AddSingleton<IMcpSchemaService>(new PostgresMcpSchemaService(connectionString));
 builder.Services.AddScoped<SchemaCoordinator>();
 
 // Add services to the container.
@@ -49,7 +49,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.MapPost("/query", async (
-                McpQueryCoordinator coordinator,
+                QueryCoordinator coordinator,
                 Mcp.Db.Contract.Models.McpQueryRequest request,
                 CancellationToken cancellationToken) =>
 {

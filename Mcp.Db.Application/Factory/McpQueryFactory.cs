@@ -5,14 +5,8 @@ namespace Mcp.Db.Application.Factory;
 
 public static class McpQueryFactory
 {
-    public static IMcpQueryService Create(string uri)
+    public static IMcpQueryService Create(string connectionString)
     {
-        if (uri.StartsWith("postgresql://", StringComparison.OrdinalIgnoreCase))
-        {
-            var connectionString = PostgresConnectionStringParser.Parse(uri);
-            return new PostgresMcpQueryService(connectionString);
-        }
-
-        throw new NotSupportedException($"Unsupported MCP database engine in URI: {uri}");
+        return new PostgresMcpQueryService(connectionString);
     }
 }

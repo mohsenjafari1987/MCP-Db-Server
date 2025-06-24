@@ -5,9 +5,9 @@ namespace Mcp.Db.Application.Services;
 
 public class SchemaCoordinator
 {
-    private readonly ISchemaService _schemaService;
+    private readonly IMcpSchemaService _schemaService;
 
-    public SchemaCoordinator(ISchemaService schemaService)
+    public SchemaCoordinator(IMcpSchemaService schemaService)
     {
         _schemaService = schemaService;
     }

@@ -5,11 +5,11 @@ using System.Text.RegularExpressions;
 
 namespace Mcp.Db.Infrastructure.Postgres
 {
-    public class PostgresSchemaService : ISchemaService
+    public class PostgresMcpSchemaService : IMcpSchemaService
     {
         private readonly string _connectionString;
 
-        public PostgresSchemaService(string connectionString)
+        public PostgresMcpSchemaService(string connectionString)
         {
             _connectionString = connectionString;
         }
